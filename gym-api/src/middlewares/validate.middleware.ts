@@ -1,33 +1,25 @@
 import { Request, Response, NextFunction } from "express";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-// Strong password: at least 8 characters, containing at least one letter and one number
 const STRONG_PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
-
 export function validateRegister(req: Request, res: Response, next: NextFunction) {
   const { fullName, email, password, role } = req.body;
-
   if (!fullName || !email || !password || !role) {
     return res.status(400).json({ message: "fullName, email, password and role are required" });
   }
-
   if (!EMAIL_REGEX.test(email)) {
     return res.status(400).json({ message: "Invalid email format" });
   }
-
   if (!STRONG_PASSWORD_REGEX.test(password)) {
     return res.status(400).json({
       message: "Password must be at least 8 characters and include at least one letter and one number"
     });
   }
-
   if (role !== "Member" && role !== "Trainer") {
     return res.status(400).json({ message: "role must be either 'Member' or 'Trainer'" });
   }
-
   next();
 }
-
 export function validateLogin(req: Request, res: Response, next: NextFunction) {
   const { email, password } = req.body;
 
@@ -37,7 +29,6 @@ export function validateLogin(req: Request, res: Response, next: NextFunction) {
 
   next();
 }
-
 export function validateClassSession(req: Request, res: Response, next: NextFunction) {
   const { title, timeSlot, capacity } = req.body;
 
