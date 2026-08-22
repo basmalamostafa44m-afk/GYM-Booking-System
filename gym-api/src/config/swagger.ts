@@ -14,15 +14,6 @@ const options = {
         url: "https://gym-booking-system-production-81db.up.railway.app",
       },
     ],
-    components: {
-      securitySchemes: {
-        bearerAuth: {
-          type: "http",
-          scheme: "bearer",
-          bearerFormat: "JWT"
-        }
-      }
-    }
   },
   apis: ["./src/routes/*.ts"]
 };

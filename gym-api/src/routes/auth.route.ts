@@ -73,7 +73,7 @@ const router = Router();
 *   post:
 *     tags:
 *       - Auth
-*     summary: Login and receive a JWT token
+*     summary: Login user
 *     requestBody:
 *       required: true
 *       content:
@@ -82,7 +82,7 @@ const router = Router();
 *             $ref: '#/components/schemas/LoginUser'
 *     responses:
 *       200:
-*         description: Login successful, JWT token returned
+*         description: Login successful, JWT is stored in http-only cookie
 *       401:
 *         description: Invalid credentials
 *       500:
