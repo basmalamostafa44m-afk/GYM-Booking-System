@@ -11,8 +11,8 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:" + (process.env.PORT || 3000)
-      }
+        url: "https://gym-booking-system-production.up.railway.app" ,
+      },
     ],
     components: {
       securitySchemes: {
