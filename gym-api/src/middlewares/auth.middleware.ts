@@ -13,7 +13,7 @@ interface AuthRequest extends Request {
       };
 }
 export function authMiddleware(req:  AuthRequest, res: Response, next: NextFunction) {
-  const token = req.cookies.token;
+  const token = req.cookies?.token;
 
   if (!token) {
     return res.status(401).json({ message: "No token provided" });

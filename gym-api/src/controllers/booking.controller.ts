@@ -56,13 +56,9 @@ export const createBooking = async (req: AuthRequest, res: Response) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
-
-// List the requesting member's own bookings
 export const getMyBookings = async (req: AuthRequest, res: Response) => {
   try {
     const bookings = await Booking.find({ member: req.user?.id });
-
-    // manually attach session info instead of populate()
     const bookingsWithSession = await Promise.all(
       bookings.map(async (booking) => {
         const session = await ClassSession.findById(booking.session);
@@ -81,8 +77,6 @@ export const getMyBookings = async (req: AuthRequest, res: Response) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
-
-// Cancel own booking (Member only)
 export const cancelBooking = async (req: AuthRequest, res: Response) => {
   try {
     const booking = await Booking.findById(req.params.id);

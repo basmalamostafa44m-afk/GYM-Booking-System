@@ -28,8 +28,6 @@ export const createSession = async (req: AuthRequest, res: Response) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
-
-// Browse / search available class sessions (Member & Trainer)
 export const getAllSessions = async (req: Request, res: Response) => {
   try {
     const { title, trainerName, day, availability } = req.query;
@@ -56,8 +54,6 @@ export const getAllSessions = async (req: Request, res: Response) => {
     }
 
     let sessions = await ClassSession.find(filter);
-
-    // manually attach trainer info instead of populate()
     let sessionsWithTrainer = await Promise.all(
       sessions.map(async (session) => {
         const trainer = await User.findById(session.trainer);
@@ -93,8 +89,6 @@ export const getAllSessions = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
-
-// Get a single class session by id
 export const getSessionById = async (req: AuthRequest, res: Response) => {
   try {
     const session = await ClassSession.findById(req.params.id);
@@ -102,8 +96,6 @@ export const getSessionById = async (req: AuthRequest, res: Response) => {
     if (!session) {
       return res.status(404).json({ message: "Class session not found" });
     }
-
-    // manually fetch trainer info instead of populate()
     const trainer = await User.findById(session.trainer);
 
     const bookedCount = await Booking.countDocuments({
@@ -125,8 +117,6 @@ export const getSessionById = async (req: AuthRequest, res: Response) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
-
-// Update a class session (Trainer only, own session)
 export const updateSession = async (req: AuthRequest, res: Response) => {
   try {
     const session = await ClassSession.findById(req.params.id);
@@ -155,8 +145,6 @@ export const updateSession = async (req: AuthRequest, res: Response) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
-
-// Delete a class session (Trainer only, own session, no confirmed bookings)
 export const deleteSession = async (req: AuthRequest, res: Response) => {
   try {
     const session = await ClassSession.findById(req.params.id);
@@ -187,8 +175,6 @@ export const deleteSession = async (req: AuthRequest, res: Response) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
-
-// View bookings for a session owned by the requesting trainer
 export const getSessionBookings = async (req: AuthRequest, res: Response) => {
   try {
     const session = await ClassSession.findById(req.params.id);
@@ -202,8 +188,6 @@ export const getSessionBookings = async (req: AuthRequest, res: Response) => {
     }
 
     const bookings = await Booking.find({ session: session._id.toString() });
-
-    // manually attach member info instead of populate()
     const bookingsWithMember = await Promise.all(
       bookings.map(async (booking) => {
         const member = await User.findById(booking.member);
