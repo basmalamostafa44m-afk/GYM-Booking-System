@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
       {
-        url: "https://gym-booking-system-production.up.railway.app" ,
+        url: "https://gym-booking-system-production-81db.up.railway.app",
       },
     ],
     components: {
